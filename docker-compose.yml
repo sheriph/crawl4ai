@@ -9,7 +9,7 @@ x-base-config: &base-config
   environment:
     - OPENAI_API_KEY=${OPENAI_API_KEY:-}
     - OPENAI_BASE_URL=${OPENAI_BASE_URL}
-    - GEMINI_API_TOKEN=${GEMINI_API_TOKEN:-}
+#    - GEMINI_API_TOKEN=${GEMINI_API_TOKEN:-}
     - LLM_PROVIDER=${LLM_PROVIDER:-}  # Optional: Override default provider (e.g., "anthropic/claude-3-opus")
   volumes:
     - /dev/shm:/dev/shm  # Chromium performance
