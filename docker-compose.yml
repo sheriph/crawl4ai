@@ -4,14 +4,12 @@ version: '3.8'
 x-base-config: &base-config
   ports:
     - "11235:11235"  # Gunicorn port
-#  env_file:
-#    - .llm.env       # API keys (create from .llm.env.example)
   environment:
     - OPENAI_API_KEY=${OPENAI_API_KEY:-}
     - OPENAI_BASE_URL=${OPENAI_BASE_URL}
-#    - GEMINI_API_TOKEN=${GEMINI_API_TOKEN:-}
-    - LLM_PROVIDER=${LLM_PROVIDER:-}  # Optional: Override default provider (e.g., "anthropic/claude-3-opus")
-    - SECURITY_ENABLED=${SECURITY_ENABLED:-false}
+    - LLM_PROVIDER=${LLM_PROVIDER:-}
+    # The SECURITY_API_KEYS variable is still needed here.
+    # The custom config file tells the app to READ this variable.
     - SECURITY_API_KEYS=${SECURITY_API_KEYS:-}
   volumes:
     - /dev/shm:/dev/shm  # Chromium performance
@@ -32,17 +30,18 @@ x-base-config: &base-config
 
 services:
   crawl4ai:
-    # 1. Default: Pull multi-platform test image from Docker Hub
-    # 2. Override with local image via: IMAGE=local-test docker compose up
     image: ${IMAGE:-unclecode/crawl4ai:${TAG:-latest}}
-    
-    # Local build config (used with --build)
     build:
       context: .
       dockerfile: Dockerfile
       args:
         INSTALL_TYPE: ${INSTALL_TYPE:-default}
         ENABLE_GPU: ${ENABLE_GPU:-false}
+    
+    # This is the critical new section that links your two files
+    volumes:
+      # This line mounts your custom config file, overwriting the default one.
+      - ./config/production.yml:/app/config.yml
     
     # Inherit shared config
     <<: *base-config
