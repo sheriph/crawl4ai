@@ -7,9 +7,9 @@ app:
   reload: False
   timeout_keep_alive: 300
 
-# Default LLM Configuration - THIS SECTION WAS MISSING
+# Default LLM Configuration
 llm:
-  provider: "deepinfra/zai-org/GLM-4.6" # A default is required
+  provider: "openai/gpt-4o-mini" # A default is required
 
 # Redis Configuration
 redis:
@@ -24,10 +24,10 @@ rate_limiting:
   default_limit: "1000/minute"
   storage_uri: "memory://"
 
-# Security Configuration - WITH OUR CHANGE
+# Security Configuration
 security:
-  enabled: true # Master toggle is now ON
-  api_keys_env: "SECURITY_API_KEYS" # Tells the app which env var holds the keys
+  enabled: true
+  api_keys_env: "SECURITY_API_KEYS"
   jwt_enabled: false
   https_redirect: false
   trusted_hosts: ["*"]
@@ -37,7 +37,7 @@ security:
     content_security_policy: "default-src 'self'"
     strict_transport_security: "max-age=63072000; includeSubDomains"
 
-# Crawler Configuration
+# Crawler Configuration - WITH THE MISSING 'pool' SECTION
 crawler:
   memory_threshold_percent: 95.0
   rate_limiter:
@@ -45,6 +45,9 @@ crawler:
   timeouts:
     stream_init: 30.0
     batch_process: 300.0
+  pool: # THIS IS THE NEW, REQUIRED SECTION
+    max_pages: 40
+    idle_ttl_sec: 1800
 
 # Logging Configuration
 logging:
