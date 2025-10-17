@@ -11,6 +11,8 @@ x-base-config: &base-config
     - OPENAI_BASE_URL=${OPENAI_BASE_URL}
 #    - GEMINI_API_TOKEN=${GEMINI_API_TOKEN:-}
     - LLM_PROVIDER=${LLM_PROVIDER:-}  # Optional: Override default provider (e.g., "anthropic/claude-3-opus")
+    - SECURITY_ENABLED=${SECURITY_ENABLED:-false}
+    - SECURITY_API_KEYS=${SECURITY_API_KEYS:-}
   volumes:
     - /dev/shm:/dev/shm  # Chromium performance
   deploy:
