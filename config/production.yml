@@ -1,0 +1,10 @@
+# This is your custom configuration file.
+# It overrides the default settings inside the Docker container.
+
+security:
+  enabled: true
+  api_keys_env: "SECURITY_API_KEYS" # Tells the app to get the keys from this environment variable
+  trusted_hosts: ["*"]
+
+# We only need to specify the settings we want to change.
+# The application will use its internal defaults for everything else (redis, logging, etc.).
