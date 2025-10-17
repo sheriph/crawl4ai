@@ -9,7 +9,7 @@ app:
 
 # Default LLM Configuration
 llm:
-  provider: "openai/gpt-4o-mini" # A default is required
+  provider: "openai/gpt-4o-mini"
 
 # Redis Configuration
 redis:
@@ -37,7 +37,7 @@ security:
     content_security_policy: "default-src 'self'"
     strict_transport_security: "max-age=63072000; includeSubDomains"
 
-# Crawler Configuration - WITH THE MISSING 'pool' SECTION
+# Crawler Configuration - NOW WITH THE 'browser' SECTION
 crawler:
   memory_threshold_percent: 95.0
   rate_limiter:
@@ -45,9 +45,10 @@ crawler:
   timeouts:
     stream_init: 30.0
     batch_process: 300.0
-  pool: # THIS IS THE NEW, REQUIRED SECTION
+  pool:
     max_pages: 40
     idle_ttl_sec: 1800
+  browser: {} # THIS IS THE FINAL REQUIRED SECTION
 
 # Logging Configuration
 logging:
